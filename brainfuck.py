@@ -1,5 +1,16 @@
 # -*- coding: utf-8 -*-
-import sys
+
+
+"""
+BrainF0ck 仕様
+1,配列は0～29999の範囲の30000バイト配列
+2,配列の要素値は0で初期化されている
+3,ポインタ位置は最初、配列の先頭にある
+
+参考: http://hakugetu.so.land.to/program/brainfuck/1-1.php
+"""
+
+import sys #この行を消すとなぜか動かなくなる()
 
 # メイン関数
 if __name__ == "__main__":
@@ -27,27 +38,27 @@ if __name__ == "__main__":
             bf_out[ptr] = ord(sys.stdin.buffer.read(1))
         elif bf_code[i] == '[':
             if bf_out[ptr] == 0:
-                count = 1
-                while count != 0:
+                d = 1
+                while d != 0:
                     i += 1
                     if i == len(bf_code):
                         print("構文エラー")
                         sys.exit(1)
                     if bf_code[i] == '[':
-                        count += 1
+                        d += 1
                     elif bf_code[i] == ']':
-                        count -= 1
+                        d -= 1
         elif bf_code[i] == ']':
             if bf_out[ptr] != 0:
-                count = 1
-                while count != 0:
+                d = 1
+                while d != 0:
                     i -= 1
                     if i < 0:
                         print("構文エラー")
                     if bf_code[i] == ']':
-                        count += 1
+                        d += 1
                     elif bf_code[i] == '[':
-                        count -= 1
+                        d -= 1
         else:
-            pass
+            pass #><[],.+-以外は全てコメントアウトになる
         i += 1
